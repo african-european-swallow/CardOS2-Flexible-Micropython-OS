@@ -1,0 +1,37 @@
+import framebuf
+from time import sleep
+from ssd1351 import Display, color565
+from machine import Pin, SPI, I2C  # type: ignore
+import mpr121
+
+
+spi = SPI(2, baudrate=14500000, sck=Pin(36), mosi=Pin(35))
+display = Display(spi, dc=Pin(14), cs=Pin(8), rst=Pin(15))
+WIDTH = 128
+HEIGHT = 128
+buf = bytearray(WIDTH * HEIGHT * 2)  # RGB565 (2 bytes per pixel)
+
+fb = framebuf.FrameBuffer(buf, WIDTH, HEIGHT, framebuf.RGB565)
+i2c = I2C(scl=Pin(4), sda=Pin(3),freq=100000)
+mpr = mpr121.MPR121(i2c, 0x5B)
+
+def pressed_pins(mask):
+    pins = []
+    for i in range(12):              # MPR121 has 12 inputs
+        if mask & (1 << i):          # check if bit i is set
+            pins.append(i)
+    return pins
+
+
+
+while True:
+    mask = mpr.touched()                      
+    # Draw to framebuffer
+    fb.fill(0x0000)        # black background
+    fb.text(str(pressed_pins(mask)), 20, 20, 0xFFAF)  # white text
+    print(str(pressed_pins(mask)))
+    # Push buffer to screen
+    display.blit_buffer(buf, 0, 0, WIDTH, HEIGHT)
+    sleep(0.1)
+
+
