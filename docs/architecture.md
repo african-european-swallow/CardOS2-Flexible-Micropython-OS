@@ -41,6 +41,9 @@ Applications request the capabilities they require, such as:
 
 The input manager determines which driver provides each capability.
 
+
+## Note: CardOS2 is designed to have a dpad and action buttons (A, B, X, Y, START, SELECT) at least.
+
 ## Settings
 
 System behavior is configured through a global settings system.
