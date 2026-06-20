@@ -55,3 +55,14 @@ Settings define hardware configuration, display options, enabled drivers, and ot
 Applications are independent modules that interact with CardOS2 through the public API.
 
 This separation allows applications to remain portable across different hardware configurations without needing to know the details of the underlying device.
+
+# Tasks
+
+When a call for a task is received, the kernel starts a background task and temporarily pauses normal app execution flow.
+
+While a task is active:
+
+- the task is advanced step-by-step by the kernel each frame
+- the application does not progress its logic in parallel
+- the app is effectively “held” in place until the task yields back control
+
