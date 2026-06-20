@@ -506,7 +506,17 @@ Tells the kernal to draw.
 ```python
 yield cos.intent.INTENT_DRAW
 ```
-#yuegbrtfuyqwebgutgbuweqgtgegyuguwsergfuygegygtewsgytuesw
+
+---
+
+### INTENT_RUN_TASK(task_name, func, *args, **kwargs)
+
+Run task (func) and save what it returns to cos.task_results with the key of task_name (str). For more information look at cos.task (down below).
+
+```python
+yield cos.intent.INTENT_RUN_TASK('input', cos.task.input)
+```
+
 ---
 
 # cos.hw
