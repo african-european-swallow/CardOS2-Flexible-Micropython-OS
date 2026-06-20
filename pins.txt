@@ -1,7 +1,0 @@
-i2c internal: sda:3,scl:4
-screen spi: dc:14,cs:8,rst:15,sck:36,mosi:35
-5_way_nav: i2c addr 0x20, pins: UP:0,DOWN:1,LEFT:2,RIGHT:3,CENTER:4  #left right were swapped?
-touch: i2c addr 0x5B
-i2c external: sda:12,scl:13
-sd card spi: MOSI:17,MISO:16,SCK:18,CS:10
-i2c vibrate (internal): 0x5A
