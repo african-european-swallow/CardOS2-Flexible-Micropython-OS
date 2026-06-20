@@ -161,10 +161,6 @@ cos.input.was_released("A")
 
 ---
 
-## Capability Input
-
----
-
 ### get_cap(cap)
 
 Returns keys for a capability
@@ -225,10 +221,6 @@ cos.input.was_released_cap("dpad", "LEFT")
 
 ---
 
-## Sensors
-
----
-
 ### get_sensor(cap, default=None)
 
 Reads sensor value from a capability
@@ -239,17 +231,19 @@ cos.input.get_sensor("temperature")
 
 ---
 
-# Capabilities
-
----
-
 ### claim_caps(caps)
 
-Claim input capabilities for this app
+Claims input capabilities for this app.
+
+If multiple drivers provide the same capability, priority is resolved based on order.
+
+Some drivers may expose multiple capabilities that map to the same physical input source (for example a card keyboard providing both "keyboard" and "action"). In these cases, claiming one can affect how the shared source is routed.
 
 ```python
 cos.input.claim_caps(["keyboard", "dpad"])
 ```
+
+**Note:** Capability priority is order-sensitive.
 
 ---
 
@@ -304,18 +298,156 @@ cos.input.get_active_capabilities()
 
 # cos.output
 
-Provides terminal and debug output.
+Provides feedback output based on drivers. 
 
-API coming soon
+Example:
 
+Haptic feedback motor.
+
+---
+
+### feedback(cap)
+
+Plays feedback to any device that supports it.
+
+Common feedback types:
+
+- "tick"
+-  "ok"
+-  "error"
+-  "buzz"
+-  "alert_short"
+-  "alert_long"
+-  'notify'
+
+```python
+cos.output.feedback("tick")
+```
 ---
 
 # cos.gfx
 
 Graphics system used for drawing and display control.
 
-API coming soon
+---
 
+### set_mode(full_fb=None,auto_clear=None,segment=None,set_dimensions=None,set_percent=None)
+
+(None = True/False)
+
+**Deprecated**
+Changes the settings of the screen, partually broken due to heap fragmentation. Can be disabled in settings.
+
+- full_fb: True = screen takes up full framebuffer, False = screen fragmentation is defalt (settings)
+- auto_clear: True = screen automatically clears before drawing, False = screen does not clear before drawing (Note: auto_clear should be True if the screen is segmented)
+- segment: (segx, segy) manual segmentation
+- set_dimensions:  (x, y) virtual screen size
+- set_percent: Scale virtual screen size as percentage of physical display (100 = full size)
+
+```python
+cos.gfx.set_mode(full_fb=False, auto_clear=True)
+```
+
+---
+
+### Drawing API
+
+Color format: (r, g, b)
+
+---
+
+### fill(color)
+
+Fill entire screen.
+
+---
+
+### fill_usable(color) (deprecated)
+
+Fill usable screen area.
+
+---
+
+### pixel(x, y, color)
+
+Draw a single pixel.
+
+---
+
+### hline(x, y, w, color)
+
+Draw horizontal line.
+
+---
+
+### vline(x, y, h, color)
+
+Draw vertical line.
+
+---
+
+### line(x1, y1, x2, y2, color)
+
+Draw line between two points.
+
+---
+
+### rect(x, y, w, h, color, f=False)
+
+Draw rectangle.
+
+f = filled
+
+---
+
+### ellipse(x, y, xr, yr, color, f=False, m=None)
+
+Draw ellipse.
+
+f = filled
+
+---
+
+### poly(x, y, coords, color, f=False)
+
+Draw polygon.
+
+coords = list of points
+
+---
+
+### text(string, x, y, color, s=1)
+
+Draw text.
+
+s = scale
+
+---
+
+### large_text(...) (deprecated)
+
+Use text() instead.
+
+---
+
+### smart_text(string, x, y, color, end=None, s=1, return_spacing=2)
+
+Auto-wrapping text renderer.
+
+- end: wrap X position
+- return_spacing: line spacing in pixels
+
+---
+
+### scroll(xstep, ystep) (broken)
+
+Scroll framebuffer (currently unstable).
+
+---
+
+### blit(fbuf, x, y, key=-1, palette=None) (broken)
+
+Draw framebuffer to screen.
 ---
 
 # cos.sd
