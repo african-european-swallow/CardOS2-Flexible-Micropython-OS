@@ -353,6 +353,7 @@ cos.gfx.set_mode(full_fb=False, auto_clear=True)
 ### Drawing API
 
 Color format: (r, g, b)
+(path is cos.gfx.___)
 
 ---
 
@@ -521,19 +522,126 @@ yield cos.intent.INTENT_RUN_TASK('input', cos.task.input)
 
 # cos.hw
 
-Low level hardware access.
+Low level hardware interface for CardOS2.
 
-Most apps should avoid using this directly.
+Used for managing I2C buses and basic hardware access.
 
-API coming soon
+---
 
+### init(settings=None)
+
+Initializes the hardware system.
+
+Sets up internal and external I2C buses based on settings. This is done at boot.
+
+```python
+cos.hw.init(settings)
+```
+
+---
+
+### get_i2c(name)
+
+Returns an I2C bus by name.
+
+Available names:
+- "internal"
+- "external"
+
+```python
+bus = cos.hw.get_i2c("internal")
+```
+
+Returns:
+I2C object or None
+
+---
+
+### list_i2c()
+
+Returns a list of available I2C buses.
+
+```python
+cos.hw.list_i2c()
+```
+
+Returns:
+list of bus names
+
+---
+
+### scan_all()
+
+Scans all I2C buses and prints detected devices.
+
+```python
+cos.hw.scan_all()
+```
+
+Output example:
+internal: [40, 68]
+external: []
+
+---
+
+### Notes
+
+- Internal I2C is enabled by default
+- External I2C is optional (enabled via settings)
+- Bus names are fixed: "internal", "external"
+- Drivers should always use get_i2c() instead of accessing hardware directly
 ---
 
 # cos.error
 
 Error handling system.
 
-API coming soon
+---
+
+### cos.error.report(source, msg, exc=None, level="error")
+
+Reports errors to OS. Fatal brings up a warning in the form of a task.
+
+Error levels:
+
+- "info"
+- "warn"
+- "error"
+- "fatal"
+
+```python
+report("Game", "Player pos NaN", level="warn")
+```
+
+---
+
+### cos.error.guard(source, func, *args, **kwargs)
+
+Safely run code and report errors if code fails.
+
+```python
+guard("Game", jump)
+```
+
+---
+
+### get()
+
+Returns list of caught errors.
+
+```python
+print(f'Errors: {cos.error.get()}')
+```
+
+---
+
+### clear()
+
+Clears the list of stored errors.
+
+```python
+cos.error.clear()
+```
 
 ---
 
