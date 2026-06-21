@@ -8,7 +8,7 @@ This guide will help you get CardOS2 up and running on a supported MicroPython d
 
 You will need:
 
-* A MicroPython-compatible microcontroller
+* A MicroPython compatible microcontroller
 * An SPI display and its corresponding MicroPython library (additional display interfaces may be supported in the future)
 * One or more input devices (and any required libraries)
 * A USB connection for copying files to the board
