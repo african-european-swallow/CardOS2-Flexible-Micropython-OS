@@ -568,7 +568,7 @@ yield cos.intent.INTENT_DRAW
 
 (BROKEN, use cos.run_task() then yield cos.intent.INTENT_NO_OP instead)
 
-Run task (func) and save what it returns to cos.task_results with the key of task_name (str). For more information go to docs/architecture.
+Run task (func) and save what it returns to cos.task_results with the key of task_name (str). For more information go to docs/architecture. You can create and run your own tasks.
 
 ```python
 yield cos.intent.INTENT_RUN_TASK('input', cos.task.input)
