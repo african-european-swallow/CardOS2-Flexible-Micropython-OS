@@ -9,6 +9,6 @@ To get more information on how to use CardOS2 please go to the docs folder.
 
 (github page is WIP)
 
-Inspired inspired by Abe is Goat's Slime OS
+Inspired by Abe is Goat's Slime OS
 
 
