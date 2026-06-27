@@ -151,6 +151,14 @@ cos.input.claim_caps(["action"])
 
 ---
 
+## System Quit Driver
+
+`/drivers/in/system_quit_driver.py` allows for a global way to return to the defalt application. 
+
+The defalt quit command at the moment is `START + SELECT + A`, although this can easily be changed by modifying the file.
+
+---
+
 ## Output Drivers
 
 Output drivers perform actions.
